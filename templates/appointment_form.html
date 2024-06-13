@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Appointment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Car Repair Shop</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+                <li><a href="{{ url_for('show_customers') }}">Customers</a></li>
+                <li><a href="{{ url_for('show_cars') }}">Cars</a></li>
+                <li><a href="{{ url_for('show_services') }}">Services</a></li>
+                <li><a href="{{ url_for('show_appointments') }}">Appointments</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>New Appointment</h1>
+        <form method="post">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required min="08:00" max="18:00" step="3600"><br>
+            <label for="customer_id">Customer:</label>
+            <select id="customer_id" name="customer_id" required>
+                {% for customer in customers %}
+                <option value="{{ customer.id }}">{{ customer.name }}</option>
+                {% endfor %}
+            </select><br>
+            <label for="car_id">Car:</label>
+            <select id="car_id" name="car_id" required>
+                {% for car in cars %}
+                <option value="{{ car.id }}">{{ car.make }} {{ car.model }}</option>
+                {% endfor %}
+            </select><br>
+            <label for="service_id">Services:</label>
+            <select id="service_id" name="service_id" required multiple>
+                {% for service in services %}
+                <option value="{{ service.id }}">{{ service.name }} {{ service.cost }}</option>
+                {% endfor %}
+            </select>
+            <span id="service_cost"></span><br>
+            <button type="submit">Book Appointment</button>
+        </form>
+    </div>
+
+    <!-- Вставьте скрипт здесь -->
+    <script>
+        // Функция для загрузки списка услуг с сервера
+        function loadServices() {
+            fetch("{{ url_for('show_services') }}")
+                .then(response => response.json())
+                .then(data => {
+                    const serviceSelect = document.getElementById("service_id");
+                    serviceSelect.innerHTML = ""; // Очищаем список перед добавлением новых услуг
+                    data.forEach(service => {
+                        const option = document.createElement("option");
+                        option.value = service.id;
+                        option.textContent = service.name + " - $" + service.cost;
+                        serviceSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error loading services:", error));
+        }
+
+        // Вызываем функцию для загрузки услуг при загрузке страницы
+        loadServices();
+
+        // Ограничение времени для услуги
+        document.getElementById('service_id').addEventListener('change', function() {
+            var selectedServices = [...this.selectedOptions].map(option => option.value.split(' - $')[1]);
+            var totalCost = selectedServices.reduce((acc, cost) => acc + parseFloat(cost), 0);
+            document.getElementById('service_cost').innerText = " - Total: $" + totalCost.toFixed(2);
+        });
+
+        // Устанавливаем ограничения для времени
+        document.getElementById("date").addEventListener("change", function() {
+            var selectedDate = new Date(this.value);
+            var today = new Date();
+            var dayOfWeek = selectedDate.getDay();
+
+            // Отключаем выбор выходных дней (суббота - 6, воскресенье - 0)
+            if (dayOfWeek === 6 || dayOfWeek === 0) {
+                alert("Please select a weekday.");
+                this.value = ""; // Очищаем поле даты
+            }
+
+            // Если выбрана текущая дата, ограничиваем время с текущего времени
+            if (selectedDate.toDateString() === today.toDateString()) {
+                var currentHour = today.getHours();
+                var currentMinute = today.getMinutes();
+                var currentTime = (currentHour < 10 ? "0" + currentHour : currentHour) + ":" + (currentMinute < 10 ? "0" + currentMinute : currentMinute);
+                document.getElementById("time").setAttribute("min", currentTime);
+            } else {
+                // В противном случае, устанавливаем минимальное время 08:00
+                document.getElementById("time").setAttribute("min", "08:00");
+            }
+        });
+    </script>
+</body>
+</html>

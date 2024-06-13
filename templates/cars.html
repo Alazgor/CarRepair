@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Cars{% endblock %}
+
+{% block content %}
+<div class="cars-container left-shift">
+    <h1>Cars</h1>
+    <a href="{{ url_for('new_car') }}">Add New Car</a>
+    <ul>
+        {% for car in cars %}
+            <li>
+                <strong>{{ car.make }} {{ car.model }} ({{ car.year }})</strong> - Owner: {{ car.customer.name }}
+                <a href="{{ url_for('edit_car', id=car.id) }}">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+

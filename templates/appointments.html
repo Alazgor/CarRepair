@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointments</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Car Repair Shop</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('show_customers') }}">Customers</a></li>
+                <li><a href="{{ url_for('show_cars') }}">Cars</a></li>
+                <li><a href="{{ url_for('show_services') }}">Services</a></li>
+                <li><a href="{{ url_for('show_appointments') }}">Appointments</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Appointments</h1>
+        <ul>
+            {% for appointment in appointments %}
+            <li>
+                {{ appointment.date }} at {{ appointment.time }} - {{ appointment.service.name }} for {{ appointment.car.make }} {{ appointment.car.model }} ({{ appointment.customer.name }})
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('new_appointment') }}">Book New Appointment</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+car_repair_shop/
+│
+├── templates/
+│   ├── about base.html
+│   ├── appointment_form.html
+│   ├── appointments.html
+│   ├── base.html
+│   ├── car_form.html
+│   ├── cars.html
+│   ├── customer_form.html
+│   ├── customers.html
+│   ├── index.html
+│   ├── services_form.html
+│   └── services.html
+│── static/
+│   ├── css
+│   ├── img/
+│   └── styles.css
+│
+├── app.py
+├── models.py
+├── requirements.txt
+└── .env

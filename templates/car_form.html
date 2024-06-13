@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}New Car{% endblock %}
+
+{% block content %}
+    <h1>{% if car %}Edit Car{% else %}New Car{% endif %}</h1>
+    <form method="post">
+        <label for="make">Make:</label>
+        <input type="text" id="make" name="make" value="{{ car.make if car else '' }}" required>
+        <br>
+        <label for="model">Model:</label>
+        <input type="text" id="model" name="model" value="{{ car.model if car else '' }}" required>
+        <br>
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" value="{{ car.year if car else '' }}" required>
+        <br>
+        <label for="customer_id">Customer:</label>
+        <select id="customer_id" name="customer_id" required>
+            {% for customer in customers %}
+                <option value="{{ customer.id }}" {% if car and car.customer_id == customer.id %}selected{% endif %}>{{ customer.name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">{% if car %}Update{% else %}Add{% endif %} Car</button>
+    </form>
+{% endblock %}

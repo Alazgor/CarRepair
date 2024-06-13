@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url('/static/img/background.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background-color: rgba(51, 51, 51, 0.8); /* Полупрозрачный фон */
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    position: relative; /* Для обеспечения правильного позиционирования логотипа */
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+}
+
+.logo-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.logo {
+    max-width: 150px; /* Уменьшаем максимальную ширину логотипа */
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.welcome-container {
+    text-align: center;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.container {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.cars-container {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.left-shift {
+    margin-right: auto;
+    margin-left: 5rem;
+}
