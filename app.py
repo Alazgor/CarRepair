@@ -203,5 +203,3 @@ def integrated_script():
 # Вызов интегрированного скрипта, если файл запускается напрямую
 if __name__ == '__main__':
     integrated_script()
-    app.run(debug=True)
-
